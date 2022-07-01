@@ -1,23 +1,28 @@
+#import the libraries required to make the Dashboard.
 import pandas as pd
 from dash import dcc,html,Dash,Input,Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
 
+#using pandas to get the data required for craeting graphs.
 df=pd.read_csv("Data_Science_Jobs_in_India.csv")
 fields = ['avg_salary','min_salary','max_salary']
 #conversion of salaries into dollars
 for field in fields:
   df[field] = (df[field].apply(lambda x: float(x[0:-1]) * 100000) / 78.0).astype(int)
 
-app=Dash(__name__,external_stylesheets=[dbc.themes.CYBORG])
+ # setting the themes for Dash app
+ app=Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP])
+  
 
+#designing layout for the app
 app.layout = dbc.Container([
     dbc.Row(
         dbc.Col(html.H1("Data Science Jobs Dashboard"),className='text-center text-primary mb-4',width=12),
 
     ),
-    dbc.Row([
+    dbc.Row([ #designing the dash for single graphs
         dbc.Col(
             [
                 dcc.Dropdown(
